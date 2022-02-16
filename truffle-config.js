@@ -1,4 +1,8 @@
 const path = require('path');
+const fs = require('fs');
+const provider = require('@truffle/hdwallet-provider');
+const secrets = JSON.parse(fs.readFileSync('.secrets.json').toString().trim());
+
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -47,6 +51,14 @@ module.exports = {
     host: "127.0.0.1",     // Localhost (default: none)
      port: 8545,            // Standard Ethereum port (default: none)
     network_id: "*",       // Any network (default: none)
+     },
+
+     kovan: {
+       provider: () => new provider(
+             secrets.privateKeys,
+           'https://kovan.infura.io/v3/e875ba23dc6e4e279f52cca729c27f0d', 0, 3
+       ),
+       network_id: 42
      },
     // Another network with more advanced options...
     // advanced: {
